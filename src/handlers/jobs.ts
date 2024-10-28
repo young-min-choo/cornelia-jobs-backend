@@ -14,15 +14,21 @@ export function getJobById(request:Request, response: Response) {
     response.send({});
 }
 
-export function createJob(
-    request:Request<{}, {}, CreateJobDto>, 
-    response: Response<Job>) {
-    response.status(201).send({
-        id: '123',
-        title: 'Test Job',
-        location: 'Test Location',
-        salary: 9999,
-        postTime: new Date()
-    });
-    
+export async function createJob(request:Request<Job, {}, CreateJobDto>, response: Response<Job>) {
+    const job: Job = request.body;
+    const postTime = job.postTime instanceof Date ? job.postTime : new Date(job.postTime);
+    // save job
+    const db = await dbPromise
+    db.run('INSERT INTO Job (id, title, location, salary, postTime) VALUES (?, ?, ?, ?, ?)',
+        [job.id, job.title, job.location, job.salary, postTime.toISOString()],
+        function (err: string) {
+            if (err) {
+                console.error('Error inserting job:', err);
+            } else {
+                console.log(`Job inserted with ID ${job.id}`);
+            }
+        }
+    )
+
+    response.status(201).json(job);
 }

@@ -9,5 +9,5 @@ router.get("/", getJobs)
 // /api/jobs/123
 router.get('/:id')
 
-router.post('/', createJob)
+router.post('/create', createJob)
 export default router
