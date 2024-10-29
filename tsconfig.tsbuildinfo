@@ -1,1 +1,1 @@
-{"root":["./src/index.ts"],"version":"5.6.3"}
+{"root":["./src/index.ts","./src/dtos/createjob.dto.ts","./src/handlers/jobs.ts","./src/routes/jobs.ts","./src/types/jobresponse.ts"],"version":"5.6.3"}
